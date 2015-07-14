@@ -138,7 +138,7 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
       /**
        * Event listener for scope destruction
        */
-      scope.$on('$destroy', function(event) {
+      scope.$on('$destroy', function() {
         Google.maps.event.removeListener(listener);
         Google.maps.event.clearInstanceListeners(autocomplete);
         var containers = document.getElementsByClassName('pac-container');
