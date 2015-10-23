@@ -1,5 +1,0 @@
-{
-  "cliVersion": "0.5.2",
-  "destination": "client/common/google/maps",
-  "instructions": "https://github.com/meanie/angular-google-maps#usage"
-}

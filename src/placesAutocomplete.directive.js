@@ -9,7 +9,7 @@
  */
 angular.module('Google.Maps.PlacesAutocomplete.Directive', [
   'Google.Maps.Api.Service',
-  'Utility.Convert.Service'
+  'Convert.Service'
 ])
 
 /**
