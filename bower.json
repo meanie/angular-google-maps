@@ -1,6 +1,6 @@
 {
   "name": "meanie-angular-google-maps",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./release/meanie-angular-google-maps.js",
   "ignore": [
     "**/.*",
