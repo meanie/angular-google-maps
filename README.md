@@ -8,6 +8,8 @@
 
 Services and directives for using Google Maps with Angular
 
+![Meanie](https://raw.githubusercontent.com/meanie/meanie/master/meanie-logo-full.png)
+
 ## Installation
 
 You can install this package using `npm` or `bower`.
@@ -41,15 +43,19 @@ Include the script `bower_components/meanie-angular-google-maps/release/meanie-a
 Add `GoogleMaps.Service` as a dependency for your app.
 
 ## Issues & feature requests
-Please report any bugs, issues, suggestions and feature requests in the appropriate issue tracker:
-* [Module issue tracker](https://github.com/meanie/angular-google-maps/issues)
-* [Meanie Boilerplate issue tracker](https://github.com/meanie/boilerplate/issues)
-* [Meanie CLI issue tracker](https://github.com/meanie/meanie/issues)
+
+Please report any bugs, issues, suggestions and feature requests in the [meanie-angular-google-maps issue tracker](https://github.com/meanie/angular-google-maps/issues).
 
 ## Contributing
-If you would like to contribute to Meanie, please check out the [Meanie contributing guidelines](https://github.com/meanie/meanie/blob/master/CONTRIBUTING.md).
+
+Pull requests are welcome! If you would like to contribute to Meanie, please check out the [Meanie contributing guidelines](https://github.com/meanie/meanie/blob/master/CONTRIBUTING.md).
+
+## Credits
+
+* Meanie logo designed by [Quan-Lin Sim](mailto:quan.lin.sim+meanie@gmail.com)
 
 ## License
+
 (MIT License)
 
 Copyright 2015-2016, [Adam Buczynski](http://adambuczynski.com)
