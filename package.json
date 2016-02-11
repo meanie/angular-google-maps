@@ -1,7 +1,7 @@
 {
   "name": "meanie-angular-google-maps",
   "description": "Services and directives for using Google Maps with Angular",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "homepage": "https://github.com/meanie/",
   "author": {
     "name": "Adam Buczynski",
