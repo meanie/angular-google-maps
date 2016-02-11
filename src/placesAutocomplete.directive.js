@@ -104,7 +104,9 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
       var options = {};
 
       //Turn off field's autocomplete
-      element.attr('autocomplete', 'off');
+      //NOTE: Setting to merely 'off' doesn't do the trick
+      //See: https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
+      element.attr('autocomplete', 'nope');
 
       //Restrict by types?
       if (attrs.restrictTypes) {
