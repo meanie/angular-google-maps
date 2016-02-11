@@ -14,7 +14,9 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
 /**
  * Directive
  */
-.directive('placesAutocomplete', ['GoogleMapsApi', '$injector', function(Google, $injector) {
+.directive('placesAutocomplete', ['GoogleMapsApi', '$injector', '$timeout', function(
+  Google, $injector, $timeout
+) {
 
   /**
    * Convert string to camel case
@@ -105,8 +107,12 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
 
       //Turn off field's autocomplete
       //NOTE: Setting to merely 'off' doesn't do the trick
-      //See: https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
-      element.attr('autocomplete', 'nope');
+      //See: https://developer.mozilla.org/en-US/docs/Web/Security/
+      //     Securing_your_site/Turning_off_form_autocompletion
+      //In addition, this needs to be wrapped in a timeout because Google Maps sets it to off
+      $timeout(function() {
+        element.attr('autocomplete', 'nope');
+      }, 500);
 
       //Restrict by types?
       if (attrs.restrictTypes) {
