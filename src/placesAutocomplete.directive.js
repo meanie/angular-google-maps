@@ -8,8 +8,7 @@
  * Module definition and dependencies
  */
 angular.module('Google.Maps.PlacesAutocomplete.Directive', [
-  'Google.Maps.Api.Service',
-  'Convert.Service'
+  'Google.Maps.Api.Service'
 ])
 
 /**
