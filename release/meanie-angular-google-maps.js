@@ -1,5 +1,5 @@
 /**
- * meanie-angular-google-maps - v1.1.3 - 11-1-2016
+ * meanie-angular-google-maps - v1.2.0 - 11-1-2016
  * https://github.com/meanie/
  *
  * Copyright (c) 2016 Adam Buczynski <me@adambuczynski.com>
@@ -132,6 +132,9 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
 
       //Autocomplete options
       var options = {};
+
+      //Turn off field's autocomplete
+      element.attr('autocomplete', 'off');
 
       //Restrict by types?
       if (attrs.restrictTypes) {
