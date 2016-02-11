@@ -1,5 +1,5 @@
 /**
- * meanie-angular-google-maps - v1.1.1 - 10-1-2016
+ * meanie-angular-google-maps - v1.1.2 - 11-1-2016
  * https://github.com/meanie/
  *
  * Copyright (c) 2016 Adam Buczynski <me@adambuczynski.com>
@@ -45,9 +45,44 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
 /**
  * Directive
  */
-.directive('placesAutocomplete', ['GoogleMapsApi', '$convert', function(
-  Google, $convert
-) {
+.directive('placesAutocomplete', ['GoogleMapsApi', function(Google) {
+
+  /**
+   * Convert string to camel case (from meanie-angular-convert)
+   */
+  function toCamelCase(str, ucfirst) {
+    if (typeof str === 'number') {
+      return String(str);
+    }
+    else if (typeof str !== 'string') {
+      return '';
+    }
+    if ((str = String(str).trim()) === '') {
+      return '';
+    }
+    return str
+      .replace(/_+|\-+/g, ' ')
+      .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+        if (+match === 0) {
+          return '';
+        }
+        return (index === 0 && !ucfirst) ? match.toLowerCase() : match.toUpperCase();
+      });
+  }
+
+  /**
+   * Convert object keys to camel case
+   */
+  function keysToCamelCase(obj) {
+    var newObj = {};
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        var newKey = toCamelCase(key);
+        newObj[newKey] = angular.copy(obj[key]);
+      }
+    }
+    return newObj;
+  }
 
   /**
    * Helper to find an address component type
@@ -134,8 +169,7 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
       function placeChanged() {
 
         //Get selected place and convert keys
-        var place = autocomplete.getPlace();
-        place = $convert.object.keysToCamelCase(place);
+        var place = keysToCamelCase(autocomplete.getPlace());
 
         //Set in scope
         scope.$apply(function() {
