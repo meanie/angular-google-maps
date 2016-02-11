@@ -15,35 +15,26 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
 /**
  * Directive
  */
-.directive('placesAutocomplete', ['GoogleMapsApi', function(Google) {
+.directive('placesAutocomplete', ['GoogleMapsApi', '$injector', function(Google, $injector) {
 
   /**
-   * Convert string to camel case (from meanie-angular-convert)
+   * Convert string to camel case
    */
-  function toCamelCase(str, ucfirst) {
-    if (typeof str === 'number') {
-      return String(str);
-    }
-    else if (typeof str !== 'string') {
-      return '';
-    }
-    if ((str = String(str).trim()) === '') {
-      return '';
-    }
+  function toCamelCase(str) {
     return str
       .replace(/_+|\-+/g, ' ')
       .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
         if (+match === 0) {
           return '';
         }
-        return (index === 0 && !ucfirst) ? match.toLowerCase() : match.toUpperCase();
+        return (index === 0) ? match.toLowerCase() : match.toUpperCase();
       });
   }
 
   /**
    * Convert object keys to camel case
    */
-  function keysToCamelCase(obj) {
+  var keysToCamelCase = function(obj) {
     var newObj = {};
     for (var key in obj) {
       if (obj.hasOwnProperty(key)) {
@@ -52,6 +43,11 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
       }
     }
     return newObj;
+  };
+
+  //Check if we have the convert library available to us and us that instead
+  if ($injector.has('$convert')) {
+    keysToCamelCase = $injector.get('$convert').object.keysToCamelCase;
   }
 
   /**
