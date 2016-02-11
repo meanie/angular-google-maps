@@ -103,6 +103,9 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
       //Autocomplete options
       var options = {};
 
+      //Turn off field's autocomplete
+      element.attr('autocomplete', 'off');
+
       //Restrict by types?
       if (attrs.restrictTypes) {
         options.types = attrs.restrictTypes.split(',');
