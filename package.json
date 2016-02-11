@@ -40,9 +40,6 @@
     "version": "gulp release && git add release/*",
     "postversion": "git push && git push --tags && npm publish"
   },
-  "peerDependencies": {
-    "meanie-angular-convert": ">= 1.2.2"
-  },
   "devDependencies": {
     "angular": "^1.5.0",
     "angular-mocks": "^1.5.0",
