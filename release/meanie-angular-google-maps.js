@@ -1,5 +1,5 @@
 /**
- * meanie-angular-google-maps - v1.3.2 - 11-1-2016
+ * meanie-angular-google-maps - v1.3.2 - 18-6-2016
  * https://github.com/meanie/
  *
  * Copyright (c) 2016 Adam Buczynski <me@adambuczynski.com>
@@ -52,19 +52,10 @@
       /**
        * Controller
        */
-      controller: ['$scope', '$attrs', '$element', '$timeout', '$convert', function ($scope, $attrs, $element, $timeout, $convert) {
+      controller: ['$scope', '$attrs', '$element', '$convert', function controller($scope, $attrs, $element, $convert) {
 
         //Set options
         $scope.options = $scope.options || {};
-
-        //Turn off field's autocomplete
-        //NOTE: Setting to merely 'off' doesn't do the trick
-        //See: https://developer.mozilla.org/en-US/docs/Web/Security/
-        //     Securing_your_site/Turning_off_form_autocompletion
-        //This needs to be wrapped in a timeout because Google Maps sets it to off.
-        $timeout(function () {
-          $element.attr('autocomplete', 'nope');
-        }, 500);
 
         /**
          * Place changed handler
@@ -77,6 +68,7 @@
           }
         };
       }],
+
 
       /**
        * Linking function
