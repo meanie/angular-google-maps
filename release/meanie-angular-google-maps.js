@@ -1,5 +1,5 @@
 /**
- * meanie-angular-google-maps - v1.3.2 - 18-6-2016
+ * meanie-angular-google-maps - v1.3.3 - 18-6-2016
  * https://github.com/meanie/
  *
  * Copyright (c) 2016 Adam Buczynski <me@adambuczynski.com>
