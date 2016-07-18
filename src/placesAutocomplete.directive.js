@@ -21,19 +21,10 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
     /**
      * Controller
      */
-    controller: function($scope, $attrs, $element, $timeout, $convert) {
+    controller($scope, $attrs, $element, $convert) {
 
       //Set options
       $scope.options = $scope.options || {};
-
-      //Turn off field's autocomplete
-      //NOTE: Setting to merely 'off' doesn't do the trick
-      //See: https://developer.mozilla.org/en-US/docs/Web/Security/
-      //     Securing_your_site/Turning_off_form_autocompletion
-      //This needs to be wrapped in a timeout because Google Maps sets it to off.
-      $timeout(function() {
-        $element.attr('autocomplete', 'nope');
-      }, 500);
 
       /**
        * Place changed handler
@@ -50,7 +41,7 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
     /**
      * Linking function
      */
-    link: function(scope, element) {
+    link(scope, element) {
 
       //Initialize autocomplete API now with options
       let autocomplete = new Google.maps.places.Autocomplete(

@@ -1,4 +1,4 @@
-# Meanie - Angular Google Maps
+# meanie-angular-google-maps
 
 [![npm version](https://img.shields.io/npm/v/meanie-angular-google-maps.svg)](https://www.npmjs.com/package/meanie-angular-google-maps)
 [![node dependencies](https://david-dm.org/meanie/angular-google-maps.svg)](https://david-dm.org/meanie/angular-google-maps)
@@ -12,9 +12,7 @@ Services and directives for using Google Maps with Angular
 
 ## Installation
 
-You can install this package using `npm` or `bower`.
-
-### npm
+You can install this package using `npm`:
 
 ```shell
 npm install meanie-angular-google-maps --save
@@ -24,20 +22,6 @@ Include the script `node_modules/meanie-angular-google-maps/release/meanie-angul
 
 ```html
 <script src="node_modules/meanie-angular-google-maps/release/meanie-angular-google-maps.js"></script>
-```
-
-Add `GoogleMaps.Service` as a dependency for your app.
-
-### bower
-
-```shell
-bower install meanie-angular-google-maps
-```
-
-Include the script `bower_components/meanie-angular-google-maps/release/meanie-angular-google-maps.js` in your build process, or add it via a `<script>` tag to your `index.html`:
-
-```html
-<script src="bower_components/meanie-angular-google-maps/release/meanie-angular-google-maps.js"></script>
 ```
 
 Add `GoogleMaps.Service` as a dependency for your app.
