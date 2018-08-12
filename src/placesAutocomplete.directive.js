@@ -9,7 +9,7 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
 /**
  * Directive
  */
-.directive('placesAutocomplete', ['GoogleMapsApi', '$timeout', function(Google, $timeout, $convert) {
+.directive('placesAutocomplete', ['GoogleMapsApi', '$timeout', '$convert', function(Google, $timeout, $convert) {
   return {
     restrict: 'A',
     scope: {
