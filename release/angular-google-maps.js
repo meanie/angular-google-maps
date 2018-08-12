@@ -35,7 +35,7 @@
   /**
    * Directive
    */
-  .directive('placesAutocomplete', ['GoogleMapsApi', '$timeout', function (Google, $timeout, $convert) {
+  .directive('placesAutocomplete', ['GoogleMapsApi', '$timeout', '$convert', function (Google, $timeout, $convert) {
     return {
       restrict: 'A',
       scope: {
