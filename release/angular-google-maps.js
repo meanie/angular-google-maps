@@ -1,7 +1,7 @@
 /**
  * @meanie/angular-google-maps * https://github.com/meanie/
  *
- * Copyright (c) 2017 Adam Reis <adam@reis.nz>
+ * Copyright (c) 2018 Adam Reis <adam@reis.nz>
  * License: MIT
  */
 (function (window, angular, undefined) {
@@ -35,7 +35,7 @@
   /**
    * Directive
    */
-  .directive('placesAutocomplete', ['GoogleMapsApi', function (Google) {
+  .directive('placesAutocomplete', ['GoogleMapsApi', '$timeout', function (Google, $timeout, $convert) {
     return {
       restrict: 'A',
       scope: {
@@ -47,7 +47,7 @@
       /**
        * Controller
        */
-      controller: ['$scope', '$attrs', '$element', '$convert', function controller($scope, $attrs, $element, $convert) {
+      controller: ['$scope', '$attrs', function controller($scope, $attrs) {
 
         //Set options
         $scope.options = $scope.options || {};
@@ -81,6 +81,11 @@
           });
           autocomplete.setBounds(circle.getBounds());
         }
+
+        //Kill auto complete
+        $timeout(function () {
+          return element.attr('autocomplete', 'goawaygoogle');
+        }, 100);
 
         /**
          * Place changed handler
