@@ -3,25 +3,25 @@
  * Module definition and dependencies
  */
 angular.module('Google.Maps.PlacesAutocomplete.Directive', [
-  'Google.Maps.Api.Service'
+  'Google.Maps.Api.Service',
 ])
 
 /**
  * Directive
  */
-.directive('placesAutocomplete', ['GoogleMapsApi', function(Google) {
+.directive('placesAutocomplete', ['GoogleMapsApi', '$timeout', function(Google, $timeout, $convert) {
   return {
     restrict: 'A',
     scope: {
       geoLocation: '=',
       options: '=',
-      onChange: '&'
+      onChange: '&',
     },
 
     /**
      * Controller
      */
-    controller($scope, $attrs, $element, $convert) {
+    controller($scope, $attrs) {
 
       //Set options
       $scope.options = $scope.options || {};
@@ -32,7 +32,7 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
       $scope.placeChanged = function(place) {
         if ($attrs.onChange) {
           $scope.onChange({
-            place: $convert.object.keysToCamelCase(place)
+            place: $convert.object.keysToCamelCase(place),
           });
         }
       };
@@ -49,15 +49,23 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
       );
 
       //Set bounds if geo location given
-      if (scope.geoLocation && angular.isObject(scope.geoLocation) && scope.geoLocation.coords) {
+      if (
+        scope.geoLocation &&
+        angular.isObject(scope.geoLocation) &&
+        scope.geoLocation.coords
+      ) {
         let circle = new Google.maps.Circle({
           radius: scope.geoLocation.coords.accuracy,
           center: new Google.maps.LatLng(
-            scope.geoLocation.coords.latitude, scope.geoLocation.coords.longitude
-          )
+            scope.geoLocation.coords.latitude,
+            scope.geoLocation.coords.longitude
+          ),
         });
         autocomplete.setBounds(circle.getBounds());
       }
+
+      //Kill auto complete
+      $timeout(() => element.attr('autocomplete', 'goawaygoogle'), 100);
 
       /**
        * Place changed handler
@@ -90,6 +98,6 @@ angular.module('Google.Maps.PlacesAutocomplete.Directive', [
           containers[i].parentNode.removeChild(containers[i]);
         }
       });
-    }
+    },
   };
 }]);
