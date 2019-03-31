@@ -1,7 +1,7 @@
 /**
  * @meanie/angular-google-maps * https://github.com/meanie/
  *
- * Copyright (c) 2018 Adam Reis <adam@reis.nz>
+ * Copyright (c) 2019 Adam Reis <adam@reis.nz>
  * License: MIT
  */
 (function (window, angular, undefined) {
@@ -23,100 +23,107 @@
     return $window.google;
   }]);
 })(window, window.angular);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 (function (window, angular, undefined) {
   'use strict';
-
   /**
    * Module definition and dependencies
    */
 
-  angular.module('Google.Maps.PlacesAutocomplete.Directive', ['Google.Maps.Api.Service'])
+  angular.module('Google.Maps.PlacesAutocomplete.Component', ['Google.Maps.Api.Service'])
 
   /**
    * Directive
    */
-  .directive('placesAutocomplete', ['GoogleMapsApi', '$timeout', '$convert', function (Google, $timeout, $convert) {
-    return {
-      restrict: 'A',
-      scope: {
-        geoLocation: '=',
-        options: '=',
-        onChange: '&'
-      },
+  .component('placesAutocomplete', {
+    template: '<ng-transclude/>',
+    transclude: true,
+    bindings: {
+      geoLocation: '<',
+      options: '<',
+      onChange: '&'
+    },
+    controller: ['GoogleMapsApi', '$timeout', '$convert', '$element', function controller(GoogleMapsApi, $timeout, $convert, $element) {
+
+      //Rename
+      var Google = GoogleMapsApi;
 
       /**
-       * Controller
+       * Post link
        */
-      controller: ['$scope', '$attrs', function controller($scope, $attrs) {
+      this.$postLink = function () {
+        var _this = this;
 
-        //Set options
-        $scope.options = $scope.options || {};
+        //Get data
+        var geoLocation = this.geoLocation,
+            options = this.options;
 
-        /**
-         * Place changed handler
-         */
-        $scope.placeChanged = function (place) {
-          if ($attrs.onChange) {
-            $scope.onChange({
-              place: $convert.object.keysToCamelCase(place)
-            });
-          }
-        };
-      }],
-
-
-      /**
-       * Linking function
-       */
-      link: function link(scope, element) {
+        var $input = $element.find('input');
 
         //Initialize autocomplete API now with options
-        var autocomplete = new Google.maps.places.Autocomplete(element[0], scope.options);
+        this.autocomplete = new Google.maps.places.Autocomplete($input[0], options);
 
         //Set bounds if geo location given
-        if (scope.geoLocation && angular.isObject(scope.geoLocation) && scope.geoLocation.coords) {
+        if (geoLocation && (typeof geoLocation === 'undefined' ? 'undefined' : _typeof(geoLocation)) === 'object' && geoLocation.coords) {
           var circle = new Google.maps.Circle({
-            radius: scope.geoLocation.coords.accuracy,
-            center: new Google.maps.LatLng(scope.geoLocation.coords.latitude, scope.geoLocation.coords.longitude)
+            radius: geoLocation.coords.accuracy,
+            center: new Google.maps.LatLng(geoLocation.coords.latitude, geoLocation.coords.longitude)
           });
-          autocomplete.setBounds(circle.getBounds());
+          this.autocomplete.setBounds(circle.getBounds());
         }
 
         //Kill auto complete
         $timeout(function () {
-          return element.attr('autocomplete', 'goawaygoogle');
+          return $input.attr('autocomplete', 'goawaygoogle');
         }, 100);
 
-        /**
-         * Place changed handler
-         */
-        function placeChanged() {
+        //Add listener for place changes
+        this.listener = Google.maps.event.addListener(this.autocomplete, 'place_changed', function () {
 
           //Get selected place and convert keys
-          var place = autocomplete.getPlace();
-          place.inputValue = element[0].value;
+          var place = _this.autocomplete.getPlace();
+          place.inputValue = $input[0].value;
 
-          //Set in scope
-          scope.$apply(function () {
-            scope.placeChanged(place);
-          });
-        }
-
-        /**
-         * Event listener for place changes
-         */
-        var listener = Google.maps.event.addListener(autocomplete, 'place_changed', placeChanged);
-
-        //Event listener for scope destruction
-        scope.$on('$destroy', function () {
-          Google.maps.event.removeListener(listener);
-          Google.maps.event.clearInstanceListeners(autocomplete);
-          var containers = document.getElementsByClassName('pac-container');
-          for (var i = 0; i < containers.length; i++) {
-            containers[i].parentNode.removeChild(containers[i]);
-          }
+          //Trigger handler
+          _this.placeChanged(place);
         });
-      }
-    };
-  }]);
+      };
+
+      /**
+       * On changes
+       */
+      this.$onChanges = function () {
+
+        //Propagate options
+        if (this.autocomplete && this.options) {
+          this.autocomplete.setOptions(this.options);
+        }
+      };
+
+      /**
+       * On destroy
+       */
+      this.$onDestroy = function () {
+        Google.maps.event.removeListener(this.listener);
+        Google.maps.event.clearInstanceListeners(this.autocomplete);
+        var containers = document.getElementsByClassName('pac-container');
+        for (var i = 0; i < containers.length; i++) {
+          containers[i].parentNode.removeChild(containers[i]);
+        }
+      };
+
+      /**
+       * Place changed handler
+       */
+      this.placeChanged = function (place) {
+        var _this2 = this;
+
+        place = $convert.object.keysToCamelCase(place);
+        $timeout(function () {
+          _this2.onChange({ place: place });
+        });
+      };
+    }]
+  });
 })(window, window.angular);
