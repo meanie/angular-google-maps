@@ -1,7 +1,7 @@
 /**
  * @meanie/angular-google-maps * https://github.com/meanie/
  *
- * Copyright (c) 2019 Adam Reis <adam@reis.nz>
+ * Copyright (c) 2020 Adam Reis <adam@reis.nz>
  * License: MIT
  */
 (function (window, angular, undefined) {
